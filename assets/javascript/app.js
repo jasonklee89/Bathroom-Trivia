@@ -1,7 +1,15 @@
+// Start Button
 $("#start").on("click", function(){
-    $("#start").remove(); 
+    $("#start").remove();
+    game.loadQuestion();
 });
 
+// invokes function(e) when answer-button is clicked
+$(document).on('click', '.answer-button', function(e){
+    game.clicked(e);
+})
+
+// Question Array
 var questions = [{
     question: "The average person uses the toilet 2,500 times per year. So over the course of an average lifetime, people spend about ______ years on the toilet!",
     answers: ["1", "3", "10", "10,000"],
@@ -37,5 +45,58 @@ var questions = [{
     answers: ["10%", "30%", "75%", "85%"],
     correctAnswer: "85%",
     image: "assets/images/toiletfall.jpg"
-}
-]
+}];
+
+var game = {
+    questions:questions,
+    currentQuestion:0,
+    counter:30,
+    correct:0,
+    incorrect:0,
+    countdown: function() {
+        // Countdown from 30 seconds
+        game.counter--;
+        // Update to HTML
+        $("#counter").html(game.counter);
+        // Time's up if less than 1 second
+        if (game.counter < 1) {
+            console.log("Time's Up!");
+            game.timeUp();
+        }
+    }, 
+    loadQuestion: function() {
+        // Countdown one number per second
+        timer = setInterval(game.countdown, 1000);
+        // Add header for question
+        $("#subwrapper").html("<h2>" + questions[game.currentQuestion].question + "</h2>");
+        // load the question while adding a data-name to store the question
+        for (var i = 0; i < questions[game.currentQuestion].answers.length; i++) {
+            $("#subwrapper").append('<button class="answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>');
+        }
+    },
+    timeUp: function() {
+
+    },
+    results: function() {
+
+    },
+    clicked: function(e) {
+        // Clear interval once answer is selected
+        clearInterval(timer);
+        // Run answeredCorrectly() if they selected correctAnswer, run answeredIncorrectly() if wrong answer selected
+        if($(e.target).data("name") == questions[game.currentQuestion].correctAnswer) {
+            game.answeredCorrectly();
+        } else {
+            game.answeredIncorrectly();
+        }
+    },
+    answeredCorrectly: function() {
+        console.log("correct!")
+    },
+    answeredIncorrectly: function() {
+        console.log("wrong!")
+    },
+    reset: function() {
+
+    }
+};
