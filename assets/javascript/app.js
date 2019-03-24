@@ -99,6 +99,8 @@ var game = {
         $('#subwrapper').html('<h2>Times up, son!!</h2>');
         // Tell them the correct answer in HTML
         $('#subwrapper').append('<h3>The Correct Answer Was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
+        // Append image
+        $('#subwrapper').append('<img src=' + questions[game.currentQuestion].image + '>');
         // If last question, take to results screen.  Otherwise, load nextQuestion
         if (game.currentQuestion == questions.length - 1) {
             setTimeout(game.results, 3 * 1000);
@@ -135,6 +137,8 @@ var game = {
         game.correct++;
         // Display Correct!! on html
         $('#subwrapper').html('<h2>Correct!!</h2>');
+        // Append image
+        $('#subwrapper').append('<img src=' + questions[game.currentQuestion].image + '>');
         // If last question, take to results screen.  Otherwise, load nextQuestion
         if (game.currentQuestion == questions.length - 1) {
             setTimeout(game.results, 3 * 1000);
@@ -152,6 +156,8 @@ var game = {
         $('#subwrapper').html('<h2>Incorrect!!</h2>');
         // Display correct answer
         $('#subwrapper').append('<h3>The Correct Answer Was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
+        // Append image
+        $('#subwrapper').append('<img src=' + questions[game.currentQuestion].image + '>');
         // If last question, take to results screen.  Otherwise, load nextQuestion
         if (game.currentQuestion == questions.length - 1) {
             setTimeout(game.results, 3 * 1000);
@@ -162,7 +168,7 @@ var game = {
     reset: function() {
         // Reset game to start
         game.currentQuestion = 0;
-        game.counter = 0;
+        game.counter = 30;
         game.correct = 0;
         game.incorrect = 0;
         game.unanswered = 0;
